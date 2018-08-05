@@ -1,12 +1,11 @@
 FROM node:10
 
-RUN npm install yarn
+RUN apt-get update && apt-get install build-essential
 
 WORKDIR /app
-ADD package.json /app/package.json
-ADD package-lock.json /app/package-lock.json
+ADD . /app
 RUN npm install
 
-ADD . /app
+RUN npm run build
 
-CMD npm run serve
+CMD npm run serve-static
