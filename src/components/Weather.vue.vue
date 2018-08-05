@@ -22,6 +22,7 @@
 import axios from 'axios';
 const DarkSky = require('dark-sky');
 import Vue from 'vue';
+import { setInterval } from 'timers';
 
 export default Vue.extend({
   name: 'Weather',
@@ -43,6 +44,8 @@ export default Vue.extend({
   mounted() {
     // this.darksky = new DarkSky(process.env.VUE_APP_DARK_SKY);
     this.refreshWeather();
+
+    setInterval(this.refreshWeather.bind(this), 1000 * 60 * 30);
   },
 
   methods: {
