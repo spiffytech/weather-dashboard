@@ -1,29 +1,35 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <Weather
+      v-if="latitude && longitude"
+      :latitude="latitude"
+      :longitude="longitude"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import Weather from './components/Weather.vue';
 
 export default Vue.extend({
   name: 'app',
   components: {
-    HelloWorld
-  }
+    Weather
+  },
+
+  data() {
+    return {
+      latitude: 0,
+      longitude: 0,
+    };
+  },
+
+  mounted() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.longitude = position.coords.longitude;
+      this.latitude = position.coords.latitude;
+    });
+  },
 });
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
